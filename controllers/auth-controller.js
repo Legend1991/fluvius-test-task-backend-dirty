@@ -12,25 +12,29 @@ class AuthController extends Controller {
     const {email = '', password = ''} = req.body
 
     if (!validator.isEmail(email)) {
-      return res.status(422).json({
+      res.status(422).json({
         errors: [{field: 'email', message: 'Bad email format'}]
       })
+      return
     }
 
-    let user = await DB.getInstance().collection('users').findOne({email})
+    let db = await DB.getInstance()
+
+    let user = await db.collection('users').findOne({email})
 
     if (!user || !(await this._verifyPassword(user.passwordHash, password))) {
-      return res.status(422).json({
+      res.status(422).json({
         errors: [
           {field: 'email', message: 'Wrong email or password'},
           {field: 'password', message: 'Wrong email or password'}
         ]
       })
+      return
     }
 
     let token = await this._generateToken({email})
 
-    await DB.getInstance().collection('users').updateOne({
+    await db.collection('users').updateOne({
       email: email
     }, {
       $set: {

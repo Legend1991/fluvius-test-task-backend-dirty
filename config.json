@@ -4,5 +4,9 @@
     "name": "fluvius"
   },
   "port": 3000,
-  "secret": "SflKxwRJSMefds183jKKF2QT4fwpMeJf36POk6yJVadQssw5c"
+  "secret": "SflKxwRJSMefds183jKKF2QT4fwpMeJf36POk6yJVadQssw5c",
+  "defaultUser": {
+    "email": "test@email.com",
+    "password": "test"
+  }
 }
